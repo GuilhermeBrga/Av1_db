@@ -1,6 +1,5 @@
 from pages.page import page
 
-
 def _show_info(page, label):
     if page is None:
         return
@@ -8,7 +7,6 @@ def _show_info(page, label):
     print(f"{label} Página: {page.get_character()}")
     for register in page.get_register()[:5]:
         print(f" - {register}")
-
 
 class page_manager:
     def __init__(self):
@@ -42,7 +40,3 @@ class page_manager:
     def show_extreme(self):
         _show_info(self.first, "Primeira")
         _show_info(self.last, "Última")
-
-
-
-
