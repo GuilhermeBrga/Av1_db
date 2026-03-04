@@ -12,6 +12,8 @@ def main():
         print("Erro ao ler o arquivo.")
         return
 
+
+
     for word in words:
         print(word)
 
