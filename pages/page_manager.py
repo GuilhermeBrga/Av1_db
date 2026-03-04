@@ -1,19 +1,13 @@
-class Page:
-    def __init__(self, character: int):
-        self._character = character
-        self._register = []
-        self.next = None
-        self.previous = None
+from pages.page import Page
 
-    def add_register(self, register: str):
-        self._register.append(register)
 
-    def get_register(self):
-        return self._register
+def _show_info(page, label):
+    if page is None:
+        return
 
-    def get_character(self):
-        return self._character
-
+    print(f"{label} Página: {page.get_character()}")
+    for register in page.get_register()[:5]:
+        print(f" - {register}")
 
 
 class PageManager:
@@ -46,17 +40,8 @@ class PageManager:
             current.add_register(words[i])
 
     def show_extreme(self):
-        self._show_info(self.first, "Primeira")
-        self._show_info(self.last, "Última")
-
-
-    def _show_info(self, page, label):
-        if page is None:
-            return
-
-        print(f"{label} Página: {page.get_character()}")
-        for register in page.get_register()[:5]:
-            print(f" - {register}")
+        _show_info(self.first, "Primeira")
+        _show_info(self.last, "Última")
 
 
 

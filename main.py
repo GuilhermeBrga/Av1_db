@@ -1,4 +1,4 @@
-from Pages.page_manager import PageManager
+from pages.page_manager import PageManager
 from reader.read_txt import read_file_txt
 
 
