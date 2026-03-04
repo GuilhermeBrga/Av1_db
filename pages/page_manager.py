@@ -1,4 +1,4 @@
-from pages.page import Page
+from pages.page import page
 
 
 def _show_info(page, label):
@@ -10,7 +10,7 @@ def _show_info(page, label):
         print(f" - {register}")
 
 
-class PageManager:
+class page_manager:
     def __init__(self):
         self.first = None
         self.last = None
@@ -25,7 +25,7 @@ class PageManager:
         for i in range(len(words)):
             if i % register_per_page == 0:
                 num_pag = (i // register_per_page) + 1
-                new_page = Page(num_pag)
+                new_page = page(num_pag)
 
                 if self.first is None:
                     self.first = new_page

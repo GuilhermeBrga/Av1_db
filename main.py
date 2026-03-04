@@ -1,9 +1,9 @@
-from pages.page_manager import PageManager
+from pages.page_manager import page_manager
 from reader.read_txt import read_file_txt
 
 
 def main():
-    pm = PageManager()
+    pm = page_manager()
 
     path = input("Informe o caminho do arquivo de palavras: ")
 

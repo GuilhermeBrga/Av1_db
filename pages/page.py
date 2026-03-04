@@ -1,4 +1,4 @@
-class Page:
+class page:
     def __init__(self, character: int):
         self._character = character
         self._register = []
