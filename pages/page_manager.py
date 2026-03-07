@@ -15,9 +15,6 @@ class page_manager:
         self.total_pages = 0
 
     def create_page(self, words, register_per_page):
-        if register_per_page <= 0:
-            return
-
         current = None
 
         for i in range(len(words)):
