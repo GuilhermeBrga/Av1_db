@@ -1,4 +1,5 @@
 from hash.bucket import Bucket
+import time
 
 class HashIndex:
     def __init__(self, nb, fr):
@@ -38,6 +39,23 @@ class HashIndex:
                 self.insert(word, page_number)
 
             current = current.next
+
+    def search(self, key):
+        start_time = time.perf_counter()
+        index = self.hash_function(key)
+        bucket = self.buckets[index]
+        buckets_accessed = 0
+
+        while bucket is not None:
+            buckets_accessed += 1
+            for k, page_number in bucket.entries:
+                if k == key:
+                    end_time = time.perf_counter()
+                    return page_number, buckets_accessed, (end_time - start_time)
+            bucket = bucket.overflow
+
+        end_time = time.perf_counter()
+        return None, buckets_accessed, (end_time - start_time)
 
     def collision_rate(self, total_records):
         return (self.collisions / total_records) * 100
