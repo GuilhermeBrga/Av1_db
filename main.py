@@ -32,7 +32,7 @@ if archive is not None:
     page_size = st.number_input(
         "Informe o tamanho da página:",
         min_value=1,
-        value=100,
+        value=200,
         step=1
     )
 
