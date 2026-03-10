@@ -1,11 +1,12 @@
 from pages.page import Page
+import math
 
-def _show_info(page, label):
-    if page is None:
+def _show_info(Page, label):
+    if Page is None:
         return
 
-    print(f"{label} Página: {page.get_character()}")
-    for register in page.get_register()[:5]:
+    print(f"{label} Página: {Page.get_character()}")
+    for register in Page.get_register()[:5]:
         print(f" - {register}")
 
 class page_manager:
@@ -15,27 +16,26 @@ class page_manager:
         self.total_pages = 0
 
     def create_page(self, words, register_per_page):
-        if register_per_page <= 0:
-            return
+        self.total_pages = math.ceil(len(words) / register_per_page)
 
-        current = None
+        current_node = None
 
-        for i in range(len(words)):
-            if i % register_per_page == 0:
-                num_pag = (i // register_per_page) + 1
-                new_page = Page(num_pag)
+        for i in range(0, len(words), register_per_page):
+            page_num = (i // register_per_page) + 1
+            new_page = Page(page_num)
 
-                if self.first is None:
-                    self.first = new_page
-                else:
-                    current.next = new_page
-                    new_page.previous = current
+            page_content = words[i: i + register_per_page]
+            for word in page_content:
+                new_page.add_register(word)
 
-                current = new_page
-                self.last = new_page
-                self.total_pages += 1
+            if self.first is None:
+                self.first = new_page
+            else:
+                current_node.next = new_page
+                new_page.previous = current_node
 
-            current.add_register(words[i])
+            current_node = new_page
+            self.last = new_page
 
     def show_extreme(self):
         _show_info(self.first, "Primeira")
