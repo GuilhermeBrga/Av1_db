@@ -1,4 +1,5 @@
 from pages.page import page
+import math
 
 def _show_info(page, label):
     if page is None:
@@ -15,24 +16,26 @@ class page_manager:
         self.total_pages = 0
 
     def create_page(self, words, register_per_page):
-        current = None
+        self.total_pages = math.ceil(len(words) / register_per_page)
 
-        for i in range(len(words)):
-            if i % register_per_page == 0:
-                num_pag = (i // register_per_page) + 1
-                new_page = page(num_pag)
+        current_node = None
 
-                if self.first is None:
-                    self.first = new_page
-                else:
-                    current.next = new_page
-                    new_page.previous = current
+        for i in range(0, len(words), register_per_page):
+            page_num = (i // register_per_page) + 1
+            new_page = page(page_num)
 
-                current = new_page
-                self.last = new_page
-                self.total_pages += 1
+            page_content = words[i: i + register_per_page]
+            for word in page_content:
+                new_page.add_register(word)
 
-            current.add_register(words[i])
+            if self.first is None:
+                self.first = new_page
+            else:
+                current_node.next = new_page
+                new_page.previous = current_node
+
+            current_node = new_page
+            self.last = new_page
 
     def show_extreme(self):
         _show_info(self.first, "Primeira")
