@@ -8,23 +8,6 @@ class HashIndex:
         self.collisions = 0
         self.overflow_count = 0
 
-    # def hash_function(self, key):
-    #     hash_value = 0
-    #
-    #     for char in key:
-    #         hash_value += ord(char)
-    #
-    #     return hash_value % self.nb
-
-    # def hash_function(self, key):
-    #     hash_value = 0
-    #     prime = 31
-    #
-    #     for char in key:
-    #         hash_value = (hash_value * prime + ord(char)) % self.nb
-    #
-    #     return hash_value
-
     def hash_function(self, key):
         hash_value = 5381
 

@@ -16,15 +16,18 @@ class page_manager:
         self.total_pages = 0
 
     def create_page(self, words, register_per_page):
+
         self.total_pages = math.ceil(len(words) / register_per_page)
 
         current_node = None
 
         for i in range(0, len(words), register_per_page):
             page_num = (i // register_per_page) + 1
+
             new_page = Page(page_num)
 
             page_content = words[i: i + register_per_page]
+
             for word in page_content:
                 new_page.add_register(word)
 

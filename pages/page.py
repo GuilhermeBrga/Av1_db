@@ -1,15 +1,15 @@
 class Page:
-    def __init__(self, character: int):
-        self._character = character
-        self._register = []
+    def __init__(self, register: int):
+        self._register = register
+        self._registers = []
         self.next = None
         self.previous = None
 
     def add_register(self, register: str):
-        self._register.append(register)
+        self._registers.append(register)
 
     def get_register(self):
-        return self._register
+        return self._registers
 
     def get_character(self):
-        return self._character
+        return self._register

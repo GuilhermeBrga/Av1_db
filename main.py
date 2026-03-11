@@ -15,7 +15,7 @@ st.divider()
 
 st.subheader("Instanciando dados:")
 
-archive = st.file_uploader("Importe o arquivo:", type=["txt","csv"])
+archive = st.file_uploader("Importe o arquivo:", type=["txt"])
 
 if archive is not None:
 
@@ -58,7 +58,22 @@ if archive is not None:
 
         manager = st.session_state.manager
 
-        st.subheader("Consulta de páginas")
+        st.subheader("Resumo das páginas")
+
+        first_page = manager.first
+        last_page = manager.last
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.write(f"Primeira página ({first_page.get_character()})")
+            for r in first_page.get_register()[:5]:
+                st.write(r)
+
+        with col2:
+            st.write(f"Última página ({last_page.get_character()})")
+            for r in last_page.get_register()[:5]:
+                st.write(r)
 
         st.write("Total de páginas:", manager.total_pages)
 
@@ -77,7 +92,7 @@ if archive is not None:
 
         st.subheader(f"Página {current.get_character()}")
 
-        for r in current.get_register():
+        for r in current.get_register()[:5]:
             st.write(r)
 
         st.divider()
@@ -124,7 +139,8 @@ if archive is not None:
             if result is None:
                 st.error("Palavra não encontrada.")
             else:
-                st.success(f"Encontrado na página {result}")
+                bucket_index = st.session_state.hash_index.hash_function(key) if "hash_index" in st.session_state else "N/A"
+                st.success(f"Encontrado na página {result} | Bucket {bucket_index}")
 
             st.metric("Tempo da busca sequencial (s)", f"{search_time:.6f}")
 
@@ -145,7 +161,8 @@ if archive is not None:
                 if result is None:
                     st.error("Palavra não encontrada.")
                 else:
-                    st.success(f"Encontrado na página {result}")
+                    bucket_index = st.session_state.hash_index.hash_function(key) if "hash_index" in st.session_state else "N/A"
+                    st.success(f"Encontrado na página {result} | Bucket {bucket_index}")
 
                 st.metric("Tempo da busca com hash (s)", f"{search_time:.6f}")
 
@@ -204,82 +221,3 @@ if archive is not None:
 
             bucket = bucket.overflow
             level += 1
-
-
-
-
-
-# import streamlit as st
-# from pages.page_manager import page_manager
-#
-# st.title("Interface gráfica da AV1 de Projeto de banco de dados")
-#
-# st.subheader("Alunos: ")
-# st.write("João Guilherme Braga Nascimento / 2210285")
-# st.write("Levy Gomes Porfirio Brito / 2223882")
-# st.write("Lucas Diniz Frota / 2310302")
-#
-# st.divider()
-#
-# st.subheader("Instanciando dados: ")
-#
-# archive = st.file_uploader("Importe o arquivo:", type=["txt","csv"])
-#
-# if archive is not None:
-#     st.success("Arquivo enviado com sucesso!")
-#
-#     content = archive.read().decode("utf-8").splitlines()
-#
-#     # quantidade de dados carregados
-#     st.write("Quantidade de dados carregados:", len(content))
-#
-#     st.divider()
-#
-#     st.subheader("Configurando páginas ")
-#
-#     page_size = st.number_input(
-#         "Informe o tamanho da página:",
-#         min_value=1,
-#         value=100,
-#         step=1
-#     )
-#
-#     bucket_size = st.number_input(
-#         "Informe o tamanho da bucket:",
-#         min_value=1,
-#         value=5,
-#         step=1
-#     )
-#
-#     create_pages = st.button("Criar páginas")
-#
-#     if create_pages:
-#
-#         manager = page_manager()
-#         manager.create_page(content, page_size)
-#
-#         st.session_state.manager = manager
-#
-#     if "manager" in st.session_state:
-#
-#         manager = st.session_state.manager
-#
-#         st.write("Total de páginas:", manager.total_pages)
-#
-#         page_choice = st.number_input(
-#             "Escolha a página que deseja consultar:",
-#             min_value=1,
-#             max_value=manager.total_pages,
-#             value=1,
-#             step=1
-#         )
-#
-#         current = manager.first
-#
-#         for _ in range(page_choice - 1):
-#             current = current.next
-#
-#         st.subheader(f"Página {current.get_character()}")
-#
-#         for r in current.get_register():
-#             st.write(r)
