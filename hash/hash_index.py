@@ -44,7 +44,6 @@ class HashIndex:
 
             current = current.next
 
-    # 🔎 BUSCA USANDO O ÍNDICE HASH
     def search(self, key):
         index = self.hash_function(key)
         bucket = self.buckets[index]
